@@ -1,0 +1,110 @@
+﻿<Window x:Class="игра.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:игра"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="1">раз</Label>
+            <Label Grid.Row="1" Grid.Column="1">два</Label>
+            <Button Grid.Row="0" Grid.Column="0">раз</Button>
+            <Button Grid.Row="1" Grid.Column="0">два</Button>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0">
+            <Button Content="Заново" Margin="5" Padding="10,5" Command="{Binding ClearCommand}"/>
+            <Button Content="Бросить кубик" Margin="5" Padding="10,5" Command="{Binding ThrowDice}" Click="ThrowDice"/>
+            <Label Content="Осталось ходов: " Margin="5" Padding="10,5"/>
+            <Label Content="{Binding Step}" Margin="5" />
+            <Label Content="ОЗ: " Margin="5" Padding="10,5"/>
+            <Label Content="{Binding Lives}" Margin="5" />
+        </StackPanel>
+
+        <ItemsControl Grid.Row="0" Grid.Column="0" Margin="5,0" ItemsSource="{Binding Board}" AlternationCount="100">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Width="60" Height="60" Command="{Binding DataContext.CellCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                <Setter Property="Background" Value="DimGray"/>
+                                <Setter Property="BorderBrush" Value="DimGray"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Background="{TemplateBinding Background}" >
+                                                <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+
+                                                </Border>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    
+                                    
+                                    <DataTrigger Binding="{Binding State}" Value="UnknownCell">
+                                        <Setter Property="Background" Value="Gray"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="Empty">
+                                        <Setter Property="Background" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="ExtraMove">
+                                        <Setter Property="Background" Value="Blue"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="Death">
+                                        <Setter Property="Background" Value="Black"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="FirstGame">
+                                        <Setter Property="Background" Value="Indigo"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="SecondGame">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="ThirdGame">
+                                        <Setter Property="Background" Value="DeepPink"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding State}" Value="EndGame">
+                                        <Setter Property="Background" Value="Gold"/>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding Active}" Value="True">
+                                        <Setter Property="BorderBrush" Value="Red"/>
+                                        <Setter Property="Background" Value="Lime"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+ 
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="10" Rows="10"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        
+    </Grid>
+</Window>
