@@ -22,6 +22,7 @@
     <None Remove="Resources\all.png" />
     <None Remove="Resources\dice.png" />
     <None Remove="Resources\retry.jpg" />
+    <None Remove="Resources\retry.png" />
     <None Remove="Resources\VOYM9utPT40.jpg" />
   </ItemGroup>
 
@@ -33,7 +34,7 @@
     <Resource Include="Resources\5.png" />
     <Resource Include="Resources\all.png" />
     <Resource Include="Resources\dice.png" />
-    <Resource Include="Resources\retry.jpg" />
+    <Resource Include="Resources\retry.png" />
   </ItemGroup>
 
 </Project>

@@ -81,7 +81,7 @@
         <!--кнопки и статус снизу-->
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0">
             <Button Margin="5" Padding="10,5" Command="{Binding ClearCommand}">
-                <Image Source="Resources/retry.jpg" Margin="0,0,5,0" Width="50" Height="50" ></Image>
+                <Image Source="Resources/retry.png" Margin="0,0,5,0" Width="50" Height="50" ></Image>
             </Button>
             <Button Margin="5" Padding="10,5" Command="{Binding ThrowDice}" Click="ThrowDice">
                 <Image Source="Resources/dice.png" Margin="0,0,5,0" Width="50" Height="50" >
@@ -91,9 +91,9 @@
                 </Image>
             </Button>
             <Label Content="Осталось ходов: " FontSize="14" FontFamily="Arial" VerticalAlignment="Center" />
-            <Label Content="{Binding Step}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center" />
+            <Label Content="{Binding Step}" FontSize="14" FontFamily="Arial" Margin="0,0,15,0" VerticalAlignment="Center" />
             <Label Content="Жизни: " FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
-            <Label Content="{Binding Lives}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center" />
+            <Label Content="{Binding Lives}" FontSize="14" FontFamily="Arial" Margin="0,0,15,0" VerticalAlignment="Center" />
             <Label Content="Счёт: " FontSize="14" FontFamily="Arial" VerticalAlignment="Center"/>
             <Label Content="{Binding Score}" FontSize="14" FontFamily="Arial" VerticalAlignment="Center" />
         </StackPanel>
