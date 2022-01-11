@@ -16,22 +16,11 @@ namespace игра
 
    public partial class FirstGame : Window
    {
-      // This list describes the Bonus Red pieces of Food on the Canvas
-      private List<Point> bonusPoints = new List<Point>();
-
-      // This list describes the body of the snake on the Canvas
-      private List<Point> snakePoints = new List<Point>();
-
-
-
-      private Brush snakeColor = Brushes.Green;
-      private enum SIZE
-      {
-         THIN = 4,
-         NORMAL = 6,
-         THICK = 8
-      };
-      private enum MOVINGDIRECTION
+      private List<Point> bonusPoints = new List<Point>(); // бонусные объекты 
+      private List<Point> snakePoints = new List<Point>(); // тело змеи
+      int endTime = 60; // время на миниигру
+      private Brush snakeColor = Brushes.Green; // цвет змеи
+      private enum MOVINGDIRECTION // направление движения
       {
          UPWARDS = 8,
          DOWNWARDS = 2,
@@ -39,67 +28,54 @@ namespace игра
          TORIGHT = 6
       };
 
-      private TimeSpan FAST = new TimeSpan(1);
-      private TimeSpan MODERATE = new TimeSpan(10000);
-      private TimeSpan SLOW = new TimeSpan(50000);
-      private TimeSpan DAMNSLOW = new TimeSpan(500000);
+      private Point startingPoint = new Point(100, 100); // точка начала
+      private Point currentPosition = new Point();       // координаты головы
 
+      private int direction = 0; // направление (0 - нет движения)
+      private int previousDirection = 0; // чтобы не уехать в саму змею
 
-
-      private Point startingPoint = new Point(100, 100);
-      private Point currentPosition = new Point();
-
-      // Movement direction initialisation
-      private int direction = 0;
-
-      /* Placeholder for the previous movement direction
-       * The snake needs this to avoid its own body.  */
-      private int previousDirection = 0;
-
-      /* Here user can change the size of the snake. 
-       * Possible sizes are THIN, NORMAL and THICK */
-      private int headSize = (int)SIZE.THICK;
-
-
-
-      private int length = 100;
-      private int score = 0;
+      private int headSize = 10; // толщина земли
+      private bool play_flag = false; // начало игры
+      private int length = 7; // длина (кол-во кругов радиуса headSize в теле змеи)
+      private int score = 0;  // очки
       private Random rnd = new Random();
 
-
+      DispatcherTimer canvasTimer; // таймер перерисовки
+      DispatcherTimer oneSecond;   // таймер секундомера
 
       public FirstGame()
       {
          InitializeComponent();
-         DispatcherTimer timer = new DispatcherTimer();
-         timer.Tick += new EventHandler(timer_Tick);
-
-         /* Here user can change the speed of the snake. 
-          * Possible speeds are FAST, MODERATE, SLOW and DAMNSLOW */
-         timer.Interval = MODERATE;
-         timer.Start();
-
-
+         Restart(); // обнуление данных
+         
          this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
-         paintSnake(startingPoint);
-         currentPosition = startingPoint;
-
-         // Instantiate Food Objects
+         
          for (int n = 0; n < 10; n++)
          {
-            paintBonus(n);
+            paintBonus(n); // нарисовать бонусы
          }
+
+         startingPoint = new Point(100, 100);
+         paintSnake(startingPoint); // нарисовать змею
+         currentPosition = startingPoint;
       }
 
+      private void Restart()
+      {
+         length = 20;
+         score = 0;
+         endTime = 60;
+         direction = 0;
 
+         canvasTimer = new DispatcherTimer();
+         canvasTimer.Tick += new EventHandler(timer_Tick);
+         canvasTimer.Interval = new TimeSpan(10000);
+         canvasTimer.Start();
+
+      }
 
       private void paintSnake(Point currentposition)
       {
-
-         /* This method is used to paint a frame of the snake´s body
-          * each time it is called. */
-
-
          Ellipse newEllipse = new Ellipse();
          newEllipse.Fill = snakeColor;
          newEllipse.Width = headSize;
@@ -108,25 +84,21 @@ namespace игра
          Canvas.SetTop(newEllipse, currentposition.Y);
          Canvas.SetLeft(newEllipse, currentposition.X);
 
-         int count = paintCanvas.Children.Count;
+         int count = paintCanvas.Children.Count - 10; // кол-во точек без учета бонусных объектов
          paintCanvas.Children.Add(newEllipse);
          snakePoints.Add(currentposition);
 
-
-         // Restrict the tail of the snake
+         // удалить последний элемент змеи, если уже достигнута длина змеи
          if (count > length)
          {
-            paintCanvas.Children.RemoveAt(count - length + 9);
-            snakePoints.RemoveAt(count - length);
+            paintCanvas.Children.RemoveAt(10);
+            snakePoints.RemoveAt(0);
          }
       }
 
-
       private void paintBonus(int index)
       {
-         Point bonusPoint = new Point(rnd.Next(5, 620), rnd.Next(5, 380));
-
-
+         Point bonusPoint = new Point(rnd.Next(5, 445 - headSize), rnd.Next(5, 395 - headSize));
 
          Ellipse newEllipse = new Ellipse();
          newEllipse.Fill = Brushes.Red;
@@ -137,52 +109,50 @@ namespace игра
          Canvas.SetLeft(newEllipse, bonusPoint.X);
          paintCanvas.Children.Insert(index, newEllipse);
          bonusPoints.Insert(index, bonusPoint);
-
       }
 
-
+      // отрисовка кадра
       private void timer_Tick(object sender, EventArgs e)
       {
-         // Expand the body of the snake to the direction of movement
-
+         
          switch (direction)
          {
             case (int)MOVINGDIRECTION.DOWNWARDS:
-               currentPosition.Y += 1;
+               currentPosition.Y += headSize / 4;
                paintSnake(currentPosition);
                break;
             case (int)MOVINGDIRECTION.UPWARDS:
-               currentPosition.Y -= 1;
+               currentPosition.Y -= headSize / 4;
                paintSnake(currentPosition);
                break;
             case (int)MOVINGDIRECTION.TOLEFT:
-               currentPosition.X -= 1;
+               currentPosition.X -= headSize / 4;
                paintSnake(currentPosition);
                break;
             case (int)MOVINGDIRECTION.TORIGHT:
-               currentPosition.X += 1;
+               currentPosition.X += headSize / 4;
                paintSnake(currentPosition);
                break;
          }
 
-         // Restrict to boundaries of the Canvas
-         if ((currentPosition.X < 5) || (currentPosition.X > 620) ||
-             (currentPosition.Y < 5) || (currentPosition.Y > 380))
+         // если граница области
+         if ((currentPosition.X < 0) || (currentPosition.X > 450 - headSize + 1) ||
+             (currentPosition.Y < 0) || (currentPosition.Y > 400 - headSize + 1))
             GameOver();
 
-         // Hitting a bonus Point causes the lengthen-Snake Effect
+         // если съедена еда
          int n = 0;
          foreach (Point point in bonusPoints)
          {
-
             if ((Math.Abs(point.X - currentPosition.X) < headSize) &&
                 (Math.Abs(point.Y - currentPosition.Y) < headSize))
             {
+               // увеличить длину и очки
                length += 10;
                score += 10;
+               ScoreLable.Content = score;
 
-               // In the case of food consumption, erase the food object
-               // from the list of bonuses as well as from the canvas
+               // убрать съеденный объект
                bonusPoints.RemoveAt(n);
                paintCanvas.Children.RemoveAt(n);
                paintBonus(n);
@@ -191,9 +161,7 @@ namespace игра
             n++;
          }
 
-         // Restrict hits to body of Snake
-
-
+         // проверить пересечение с головой
          for (int q = 0; q < (snakePoints.Count - headSize * 2); q++)
          {
             Point point = new Point(snakePoints[q].X, snakePoints[q].Y);
@@ -201,24 +169,23 @@ namespace игра
                  (Math.Abs(point.Y - currentPosition.Y) < (headSize)))
             {
                GameOver();
-               this.Close();
                break;
             }
-
          }
-
-
-
-
       }
-
-
 
       private void OnButtonKeyDown(object sender, KeyEventArgs e)
       {
-
-
-
+         // запустить таймер, если началась игра
+         if (!play_flag)
+         {
+            oneSecond = new DispatcherTimer();
+            oneSecond.Tick += new EventHandler(oneSecond_Tick);
+            oneSecond.Interval = new TimeSpan(0, 0, 1);
+            oneSecond.Start();
+            play_flag = true;
+         }
+         // менять направление, если оно не прямо противоположно текущему
          switch (e.Key)
          {
             case Key.Down:
@@ -240,15 +207,34 @@ namespace игра
 
          }
          previousDirection = direction;
-
       }
 
-
-
+      // проигрыш
       private void GameOver()
       {
-         MessageBox.Show("You Lose! Your score is " + score.ToString(), "Game Over", MessageBoxButton.OK, MessageBoxImage.Hand);
+         // остановка таймеров
+         canvasTimer.Stop();
+         oneSecond.Stop();
+         MessageBox.Show("Вы проиграли! Вы теряете 1 ОЗ.", "Проигрыш", MessageBoxButton.OK, MessageBoxImage.Hand);
+         int t = -1; // изменения для того, чтобы показать, что потеряно ОЗ
+         ScoreLable.Content = t;
          this.Close();
+      }
+      // конец игры по счетчику времени
+      private void EndGame()
+      {
+         canvasTimer.Stop();
+         oneSecond.Stop();
+         MessageBox.Show("Время вышло! Ваш счет " + score.ToString(), "Время вышло", MessageBoxButton.OK, MessageBoxImage.Hand);
+         this.Close();
+      }
+      private void oneSecond_Tick(object sender, EventArgs e)
+      { 
+         // счетчик времени игры
+         endTime -= 1;
+         if (endTime < 0)
+            EndGame();
+         TimerLable.Content = endTime;
       }
    }
 }

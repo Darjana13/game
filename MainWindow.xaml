@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:игра"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="800">
+        Title="MainWindow" Height="750" Width="880">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,27 +16,86 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+
+        <!--инфо сбоку-->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="220"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="1">раз</Label>
-            <Label Grid.Row="1" Grid.Column="1">два</Label>
-            <Button Grid.Row="0" Grid.Column="0">раз</Button>
-            <Button Grid.Row="1" Grid.Column="0">два</Button>
+            <Grid Grid.Row="0">
+                <TextBlock TextWrapping="Wrap" FontSize="14" FontFamily="Arial" >
+                    Чтобы победить в игре вам необходимо добраться из левой верхней клетки в правую нижнюю, переходя только по открытым, известным клеткам.
+                    Каждое перемещение на соседнюю клетку в горизонтальном или вертикальном направлении отнимает один ход.
+                    Переходить по диагонали или перепрыгивать через клетки можно, но потребуется большее количество ходов.
+                    Чтобы получить ходы нужно бросить кубик, бросать кубик повторно нельзя пока не закончатся ходы.
+                    Попадание в клетку "смерть" отнимает одну жизнь, всего у игрока 3 жизни.
+                    Каждая клетка в зависимости от цвета имеет свое значение:
+                </TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="1" FontSize="14">Неизвестная клетка</Label>
+                <Label Grid.Row="1" Grid.Column="1" FontSize="14">Пустая клетка</Label>
+                <Label Grid.Row="2" Grid.Column="1" FontSize="14">Клетка +3 хода</Label>
+                <Label Grid.Row="3" Grid.Column="1" FontSize="14">Клетка "смерть"</Label>
+                <Label Grid.Row="4" Grid.Column="1" FontSize="14">Мини-игра 1</Label>
+                <Label Grid.Row="5" Grid.Column="1" FontSize="14">Мини-игра 2</Label>
+                <Label Grid.Row="6" Grid.Column="1" FontSize="14">Мини-игра 3</Label>
+                <Label Grid.Row="7" Grid.Column="1" FontSize="14">Финиш</Label>
+                <Label Grid.Row="8" Grid.Column="1" FontSize="14">Игрок</Label>
+
+                <Button Grid.Row="0" Grid.Column="0" FontSize="16" Background="Gray"></Button>
+                <Button Grid.Row="1" Grid.Column="0" FontSize="16" Background="White"></Button>
+                <Button Grid.Row="2" Grid.Column="0" FontSize="16" Background="Blue"></Button>
+                <Button Grid.Row="3" Grid.Column="0" FontSize="16" Background="Black"></Button>
+                <Button Grid.Row="4" Grid.Column="0" FontSize="16" Background="Indigo"></Button>
+                <Button Grid.Row="5" Grid.Column="0" FontSize="16" Background="Aqua"></Button>
+                <Button Grid.Row="6" Grid.Column="0" FontSize="16" Background="DeepPink"></Button>
+                <Button Grid.Row="7" Grid.Column="0" FontSize="16" Background="Gold"></Button>
+                <Button Grid.Row="8" Grid.Column="0" FontSize="16" Background="Lime"></Button>
+
+            </Grid>
         </Grid>
+
+        <!--кнопки и статус снизу-->
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5,0">
-            <Button Content="Заново" Margin="5" Padding="10,5" Command="{Binding ClearCommand}"/>
-            <Button Content="Бросить кубик" Margin="5" Padding="10,5" Command="{Binding ThrowDice}" Click="ThrowDice"/>
-            <Label Content="Осталось ходов: " Margin="5" Padding="10,5"/>
-            <Label Content="{Binding Step}" Margin="5" />
-            <Label Content="ОЗ: " Margin="5" Padding="10,5"/>
-            <Label Content="{Binding Lives}" Margin="5" />
+            <Button Margin="5" Padding="10,5" Command="{Binding ClearCommand}">
+                <Image Source="Resources/retry.jpg" Margin="0,0,5,0" Width="50" Height="50" ></Image>
+            </Button>
+            <Button Margin="5" Padding="10,5" Command="{Binding ThrowDice}" Click="ThrowDice">
+                <Image Source="Resources/dice.png" Margin="0,0,5,0" Width="50" Height="50" >
+                    <Image.Effect>
+                        <DropShadowEffect/>
+                    </Image.Effect>
+                </Image>
+            </Button>
+            <Label Content="Осталось ходов: " FontSize="14" FontFamily="Arial" Margin="5" Padding="10,5"/>
+            <Label Content="{Binding Step}" FontSize="14" FontFamily="Arial" Margin="5" />
+            <Label Content="Жизни: " FontSize="14" FontFamily="Arial" Margin="5" Padding="10,5"/>
+            <Label Content="{Binding Lives}" FontSize="14" FontFamily="Arial" Margin="5" />
+            <Label Content="Счёт: " FontSize="14" FontFamily="Arial" Margin="5" Padding="10,5"/>
+            <Label Content="{Binding Score}" FontSize="14" FontFamily="Arial" Margin="5" />
         </StackPanel>
 
         <ItemsControl Grid.Row="0" Grid.Column="0" Margin="5,0" ItemsSource="{Binding Board}" AlternationCount="100">
@@ -61,8 +120,8 @@
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    
-                                    
+
+
                                     <DataTrigger Binding="{Binding State}" Value="UnknownCell">
                                         <Setter Property="Background" Value="Gray"/>
                                     </DataTrigger>

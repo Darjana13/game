@@ -169,7 +169,6 @@ namespace игра
    public class MainViewModel : NotifyPropertyChanged
    {
       private Board _board = new Board();
-     // private ICommand _newGameCommand;
       private ICommand _clearCommand;
       private ICommand _cellCommand;
       private ICommand _throwdiceCommand;
@@ -217,15 +216,6 @@ namespace игра
          }
       }
 
-      /*public ICommand NewGameCommand => _newGameCommand ??= new RelayCommand(parameter =>
-      {
-         SetupBoard();
-         _step = 0;
-         _lives = 3;
-         OnPropertyChanged("Lives");
-         OnPropertyChanged("Step");
-      });*/
-
       public ICommand ClearCommand => _clearCommand ??= new RelayCommand(parameter =>
       {
          Board = new Board();
@@ -237,6 +227,8 @@ namespace игра
       });
       public ICommand ThrowDice => _throwdiceCommand ??= new RelayCommand(parameter =>
       {
+         // <Setter Property="Content" Value="<Image Source="Resources/1.jpg" Width="60" Height="60"></Image>"/>
+         
          if (_step == 0)
          {
             _step = r.Next(1, 7);
@@ -275,45 +267,55 @@ namespace игра
             else if (distance == _step)
             {
                //selectGame
+               int t = 0;
                switch (cell.State)
                {
                   case State.ExtraMove:
                      _step += 3;
                      OnPropertyChanged("Step");
-                     _score += 100;
-                     OnPropertyChanged("Score");
+                     t = 300;
                      break;
                   case State.Death:
-                     _lives -= 1;
-                     if (_lives < 1)
-                     {
-                        MessageBox.Show("Игра окончена. Ваш счет: " + _score);
-                        Board = new Board();
-                        _step = 0;
-                        _lives = 3;
-                        OnPropertyChanged("Lives");
-                        OnPropertyChanged("Step");
-                        SetupBoard();
-                        return;
-                     }
-                     OnPropertyChanged("Lives");
+                     t = -1;
                      break;
                   case State.FirstGame:
-                     FirstGame firstWindow = new FirstGame();
-                     firstWindow.Show();
-                     break;
                   case State.SecondGame:
-                     FirstGame secondWindow = new FirstGame();
-                     secondWindow.Show();
-                     break;
                   case State.ThirdGame:
-                     FirstGame thirdWindow = new FirstGame();
-                     thirdWindow.Show();
+                     FirstGame firstWindow = new FirstGame();
+                     firstWindow.ShowDialog();
+                     try
+                     {
+                        t = (int)firstWindow.ScoreLable.Content;
+                     }
+                     catch
+                     {
+                        MessageBox.Show("Вы не завершили мини-игру.");
+                     }
                      break;
                   default:
                      break;
                }
-               MessageBox.Show("Выбрана клетка типа " + cell.State);
+               if (t < 0)
+               {
+                  _lives -= 1;
+                  if (_lives < 1)
+                  {
+                     MessageBox.Show("Игра окончена. Ваш счет: " + _score);
+                     Board = new Board();
+                     _step = 0;
+                     _lives = 3;
+                     OnPropertyChanged("Lives");
+                     OnPropertyChanged("Step");
+                     SetupBoard();
+                     return;
+                  }
+                  OnPropertyChanged("Lives");
+               }
+               else
+               {
+                  _score += t;
+                  OnPropertyChanged("Score");
+               }
                cell.State = State.Empty;
             }
  
@@ -452,7 +454,6 @@ namespace игра
          InitializeComponent();
          vm = new MainViewModel();
          DataContext = vm;
-         
       }
 
       
