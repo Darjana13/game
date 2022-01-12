@@ -24,10 +24,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0">
-                <TextBlock TextWrapping="Wrap" FontSize="14" FontFamily="Arial">
+                <TextBlock TextWrapping="Wrap" FontSize="14" FontFamily="Arial" Margin="3">
                     Чтобы победить в игре вам необходимо добраться из левой верхней клетки в правую нижнюю, переходя только по открытым, известным клеткам.
                     Каждое перемещение на соседнюю клетку в горизонтальном или вертикальном направлении отнимает один ход.
                     Переходить по диагонали или перепрыгивать через клетки можно, но потребуется большее количество ходов.
@@ -65,15 +65,15 @@
                 <Label Grid.Row="7" Grid.Column="1" FontSize="14">Финиш</Label>
                 <Label Grid.Row="8" Grid.Column="1" FontSize="14">Игрок</Label>
 
-                <Rectangle Grid.Row="0" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Gray"></Rectangle>
-                <Rectangle Grid.Row="1" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="White"   ></Rectangle>
-                <Rectangle Grid.Row="2" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Blue"    ></Rectangle>
-                <Rectangle Grid.Row="3" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Black"   ></Rectangle>
-                <Rectangle Grid.Row="4" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Indigo"  ></Rectangle>
-                <Rectangle Grid.Row="5" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Aqua"    ></Rectangle>
-                <Rectangle Grid.Row="6" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="DeepPink"></Rectangle>
-                <Rectangle Grid.Row="7" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Gold"    ></Rectangle>
-                <Rectangle Grid.Row="8" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Lime"    ></Rectangle>
+                <Rectangle Grid.Row="0" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Gray"></Rectangle>
+                <Rectangle Grid.Row="1" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="White"   ></Rectangle>
+                <Rectangle Grid.Row="2" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Blue"    ></Rectangle>
+                <Rectangle Grid.Row="3" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Black"   ></Rectangle>
+                <Rectangle Grid.Row="4" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Indigo"  ></Rectangle>
+                <Rectangle Grid.Row="5" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Aqua"    ></Rectangle>
+                <Rectangle Grid.Row="6" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="DeepPink"></Rectangle>
+                <Rectangle Grid.Row="7" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Gold"    ></Rectangle>
+                <Rectangle Grid.Row="8" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="2" Fill="Lime"    ></Rectangle>
 
             </Grid>
         </Grid>

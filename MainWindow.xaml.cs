@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -107,7 +106,7 @@ namespace игра
             OnPropertyChanged();
          }
       }
-      public bool Noway // это будет показывать, что игрок тут
+      public bool Noway // это будет показывать, что к клетке еще нет пути
       {
          get => _noway;
          set
@@ -222,8 +221,6 @@ namespace игра
          Board = new Board();
          Step = 0;
          Lives = 3;
-         //OnPropertyChanged("Lives");
-         //OnPropertyChanged("Step");
          SetupBoard();
       });
       public ICommand ThrowDice => _throwdiceCommand ??= new RelayCommand(parameter =>
@@ -232,7 +229,6 @@ namespace игра
          if (_step == 0)
          {
             Step = r.Next(1, 7);
-            //OnPropertyChanged("Step");
          }
          else
             MessageBox.Show("Сначала потратьте имеющиеся ходы");
@@ -332,8 +328,7 @@ namespace игра
                gamerCell = Board.FirstOrDefault(x => x.Row == ii && x.Col == jj);
                gamerCell.Active = true;
                LookAround(gamerCell);
-               _step -= 1;
-               OnPropertyChanged("Step");
+               Step -= 1;
                await Task.Delay(500);
             }
             jj = gamerCell.Col;
@@ -344,8 +339,7 @@ namespace игра
                gamerCell = Board.FirstOrDefault(x => x.Row == ii && x.Col == jj);
                gamerCell.Active = true;
                LookAround(gamerCell);
-               _step -= 1;
-               OnPropertyChanged("Step");
+               Step -= 1;
                await Task.Delay(500);
             }
 
@@ -356,24 +350,23 @@ namespace игра
                Board = new Board();
                Step = 0;
                Lives = 3;
-               //OnPropertyChanged("Lives");
-               //OnPropertyChanged("Step");
                SetupBoard();
                return;
             }
             else if (0 == _step)
             {
-               //selectGame
+               // выбор игры
                int t = 0;
                switch (cell.State)
                {
                   case State.ExtraMove:
                      Step += 3;
-                     //OnPropertyChanged("Step");
                      t = 300;
+                     MessageBox.Show("Бонус! +3 хода, +300 очков", "Бонус", MessageBoxButton.OK, MessageBoxImage.Hand);
                      break;
                   case State.Death:
                      t = -1;
+                     MessageBox.Show("Ловушка! -1 жизнь", "Ловушка", MessageBoxButton.OK, MessageBoxImage.Hand);
                      break;
                   case State.FirstGame:
                      FirstGame firstWindow = new FirstGame();
@@ -424,17 +417,13 @@ namespace игра
                      Board = new Board();
                      Step = 0;
                      Lives = 3;
-                     //OnPropertyChanged("Lives");
-                     //OnPropertyChanged("Step");
                      SetupBoard();
                      return;
                   }
-                  //OnPropertyChanged("Lives");
                }
                else
                {
                   Score += t;
-                  //OnPropertyChanged("Score");
                }
                cell.State = State.Empty;
             }

@@ -20,7 +20,6 @@ namespace игра
    {
       private List<Point> bonusPoints = new List<Point>(); // бонусные объекты 
       private List<Point> dangerPoints = new List<Point>(); // бонусные объекты 
-      //private List<Point> gamerPoints = new List<Point>(); // тело змеи
       int endTime = 60; // время на миниигру
       private Brush bonusColor = Brushes.Blue; 
       private Brush dangerColor = Brushes.Red; 
@@ -74,6 +73,7 @@ namespace игра
 
       private void Restart()
       {
+         play_flag = false;
          score = 0;
          endTime = 60;
          direction = 0;
@@ -81,11 +81,11 @@ namespace игра
 
       private void paintGamer(Point currentposition)
       {
-
          Rectangle gamer = new Rectangle();
          gamer.Fill = gamerColor;
          gamer.Width = gamerSize;
          gamer.Height = gamerSize;
+         gamer.Stroke = Brushes.Black;
 
          Canvas.SetTop(gamer, currentposition.Y);
          Canvas.SetLeft(gamer, currentposition.X);
@@ -103,6 +103,7 @@ namespace игра
          newEllipse.Fill = bonusColor;
          newEllipse.Width = bonusSize;
          newEllipse.Height = bonusSize;
+         newEllipse.Stroke = Brushes.Black;
 
          Canvas.SetTop(newEllipse, bonusPoint.Y);
          Canvas.SetLeft(newEllipse, bonusPoint.X);
@@ -121,6 +122,7 @@ namespace игра
          newEllipse.Fill = bonusColor;
          newEllipse.Width = bonusSize;
          newEllipse.Height = bonusSize;
+         newEllipse.Stroke = Brushes.Black;
 
          Canvas.SetTop(newEllipse, bonusPoint.Y);
          Canvas.SetLeft(newEllipse, bonusPoint.X);
@@ -155,6 +157,7 @@ namespace игра
          danger.Fill = dangerColor;
          danger.Width = dangerSize;
          danger.Height = dangerSize - 10;
+         danger.Stroke = Brushes.Black;
 
          Canvas.SetTop(danger, dangerPoint.Y);
          Canvas.SetLeft(danger, dangerPoint.X);
@@ -187,8 +190,7 @@ namespace игра
          }
 
          // если съедена еда
-         int n = 0;
-         //foreach (Point point in bonusPoints)
+         int n;
          for(n = 0; n < bonusCount; n++)
          {
             Point point = bonusPoints[n];
@@ -205,7 +207,7 @@ namespace игра
             }
             else if (380 + gamerSize - point.Y < 0)
             {
-               // убрать съеденный объект
+               // убрать приземлившийся объект
                bonusPoints.RemoveAt(n);
                paintCanvas.Children.RemoveAt(n);
                paintBonus(n);
@@ -216,7 +218,6 @@ namespace игра
                rePaintBonus(n);
             }
          }
-         //foreach (Point point in dangerPoints)
          for (n = bonusCount; n < dangerCount + bonusCount; n++)
          {
             Point point = dangerPoints[n - bonusCount];
@@ -225,14 +226,13 @@ namespace игра
              || (point.X - currentPosition.X < 0 && Math.Abs(point.X - currentPosition.X) < dangerSize)) &&
                 (Math.Abs(point.Y - currentPosition.Y) < dangerSize - 10))
             {
-               score += 20;
-               ScoreLable.Content = score;
+               // столкновение с кирпичом
                GameOver();
                break;
             }
             else if (380 + gamerSize - point.Y < 0)
-            { 
-               // убрать съеденный объект
+            {
+               // убрать приземлившийся объект
                dangerPoints.RemoveAt(n - bonusCount);
                paintCanvas.Children.RemoveAt(n);
                paintDanger(n);
