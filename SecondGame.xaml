@@ -15,7 +15,6 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="400"/>
             <RowDefinition Height="auto"/>
-
         </Grid.RowDefinitions>
         <StackPanel  Grid.Row="0" Background="LightGreen"/>
         <StackPanel  Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Height="35">
@@ -27,11 +26,27 @@
 
         <StackPanel  Grid.Row="2" Background="LightGreen"/>
         <StackPanel  Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center">
-            <Label Content = "Управляйте змейкой стрелочками" FontSize = "10" HorizontalAlignment="Center" ></Label >
-            <Label Content = "Соберите как можно больше бонусов за минуту" FontSize = "10" HorizontalAlignment="Center" ></Label >
-            <Label Content = "Для начала нажмите любою стрелку" FontSize = "10" HorizontalAlignment="Center" ></Label >
+            <Label Content = "Запомни и повтори последовательность" FontSize = "10" HorizontalAlignment="Center" ></Label >
+            <Label Content = "Нельзя путать цвета" FontSize = "10" HorizontalAlignment="Center" ></Label >
+            <Label Content = "Для начала кликните мышкой" FontSize = "10" HorizontalAlignment="Center" ></Label >
         </StackPanel>
-
-        
+        <Grid  Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <Rectangle x:Name="Answer" Visibility="Hidden" Stroke="Black" Fill="White" Width="70" Height="70" Margin="10"></Rectangle>
+            </StackPanel>
+            <StackPanel x:Name="ControlButtons" IsEnabled="False" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Click="Button_Click" Tag="0" BorderBrush="Black" Background="White" Width="70" Height="70" Margin="10"></Button>
+                <Button Click="Button_Click" Tag="1" BorderBrush="Black" Background="Red" Width="70" Height="70" Margin="10"></Button>
+                <Button Click="Button_Click" Tag="2" BorderBrush="Black" Background="Blue" Width="70" Height="70" Margin="10"></Button>
+                <Button Click="Button_Click" Tag="3" BorderBrush="Black" Background="Green" Width="70" Height="70" Margin="10"></Button>
+                <Button Click="Button_Click" Tag="4" BorderBrush="Black" Background="Yellow" Width="70" Height="70" Margin="10"></Button>
+            </StackPanel>
+            <Button Grid.Row="2" Click="StartGame">Начать игру</Button>
+        </Grid>
     </Grid>
 </Window>

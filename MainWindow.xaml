@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="220"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0">
-                <TextBlock TextWrapping="Wrap" FontSize="14" FontFamily="Arial" >
+                <TextBlock TextWrapping="Wrap" FontSize="14" FontFamily="Arial">
                     Чтобы победить в игре вам необходимо добраться из левой верхней клетки в правую нижнюю, переходя только по открытым, известным клеткам.
                     Каждое перемещение на соседнюю клетку в горизонтальном или вертикальном направлении отнимает один ход.
                     Переходить по диагонали или перепрыгивать через клетки можно, но потребуется большее количество ходов.
@@ -57,23 +57,23 @@
 
                 <Label Grid.Row="0" Grid.Column="1" FontSize="14">Неизвестная клетка</Label>
                 <Label Grid.Row="1" Grid.Column="1" FontSize="14">Пустая клетка</Label>
-                <Label Grid.Row="2" Grid.Column="1" FontSize="14">Клетка +3 хода</Label>
-                <Label Grid.Row="3" Grid.Column="1" FontSize="14">Клетка "смерть"</Label>
-                <Label Grid.Row="4" Grid.Column="1" FontSize="14">Мини-игра 1</Label>
-                <Label Grid.Row="5" Grid.Column="1" FontSize="14">Мини-игра 2</Label>
-                <Label Grid.Row="6" Grid.Column="1" FontSize="14">Мини-игра 3</Label>
+                <Label Grid.Row="2" Grid.Column="1" FontSize="14">Бонус +3 хода, +300 очков</Label>
+                <Label Grid.Row="3" Grid.Column="1" FontSize="14">Ловушка, -1 жизнь</Label>
+                <Label Grid.Row="4" Grid.Column="1" FontSize="14">Змейка</Label>
+                <Label Grid.Row="5" Grid.Column="1" FontSize="14">Повтори последовательность</Label>
+                <Label Grid.Row="6" Grid.Column="1" FontSize="14">Увернись от кирпича</Label>
                 <Label Grid.Row="7" Grid.Column="1" FontSize="14">Финиш</Label>
                 <Label Grid.Row="8" Grid.Column="1" FontSize="14">Игрок</Label>
 
-                <Button Grid.Row="0" Grid.Column="0" FontSize="16" Background="Gray"></Button>
-                <Button Grid.Row="1" Grid.Column="0" FontSize="16" Background="White"></Button>
-                <Button Grid.Row="2" Grid.Column="0" FontSize="16" Background="Blue"></Button>
-                <Button Grid.Row="3" Grid.Column="0" FontSize="16" Background="Black"></Button>
-                <Button Grid.Row="4" Grid.Column="0" FontSize="16" Background="Indigo"></Button>
-                <Button Grid.Row="5" Grid.Column="0" FontSize="16" Background="Aqua"></Button>
-                <Button Grid.Row="6" Grid.Column="0" FontSize="16" Background="DeepPink"></Button>
-                <Button Grid.Row="7" Grid.Column="0" FontSize="16" Background="Gold"></Button>
-                <Button Grid.Row="8" Grid.Column="0" FontSize="16" Background="Lime"></Button>
+                <Rectangle Grid.Row="0" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Gray"></Rectangle>
+                <Rectangle Grid.Row="1" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="White"   ></Rectangle>
+                <Rectangle Grid.Row="2" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Blue"    ></Rectangle>
+                <Rectangle Grid.Row="3" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Black"   ></Rectangle>
+                <Rectangle Grid.Row="4" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Indigo"  ></Rectangle>
+                <Rectangle Grid.Row="5" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Aqua"    ></Rectangle>
+                <Rectangle Grid.Row="6" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="DeepPink"></Rectangle>
+                <Rectangle Grid.Row="7" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Gold"    ></Rectangle>
+                <Rectangle Grid.Row="8" Grid.Column="0" Width="25" Height="25" Stroke="Black" Margin="1" Fill="Lime"    ></Rectangle>
 
             </Grid>
         </Grid>
