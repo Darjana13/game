@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Resource Include="Resources\all.png" />
-    <Resource Include="Resources\bestscore.txt" />
     <Resource Include="Resources\dice.png" />
     <Resource Include="Resources\retry.png" />
   </ItemGroup>
